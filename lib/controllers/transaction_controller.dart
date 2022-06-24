@@ -49,7 +49,7 @@ class TransactionController extends ResourceController {
             if (tx.interioreTransaction.id == identitatis) {
               TransactionInfo txInfo =
               TransactionInfo(
-                false,
+                true,
                 tx.interioreTransaction.inputs.map((x) => x.transactionId).toList(),
                 interiore.indicatione,
                 interiore.obstructionumNumerus,

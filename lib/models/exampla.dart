@@ -58,6 +58,14 @@ class SubmittereTransaction extends Serializable {
     gla = BigInt.parse(map['gla'].toString());
     unit = map['unit'].toString();
   }
+  APISchemaObject documentSchema(APIDocumentContext context) {
+    return APISchemaObject.object({
+      "to": APISchemaObject.string(),
+      "from": APISchemaObject.string(),
+      "gla": APISchemaObject.string(),
+      "unit": APISchemaObject.string()
+    });
+  }
     
 }
 class RemoveTransaction {
