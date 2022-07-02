@@ -28,37 +28,6 @@ class TransactionLiberController extends ResourceController {
           "english": "can not send 0"
         });
         }
-        BigInt glascha = BigInt.zero;
-        switch(unCalcTx.unit) {
-          case UnitasClavis.GLA: {
-            glascha = Unitas.GLA! * unCalcTx.gla!;
-            break;
-          }
-          case UnitasClavis.GLAD: {
-            glascha = Unitas.GLAD! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADI: {
-            glascha = Unitas.GLADI! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIA: {
-            glascha = Unitas.GLADIA! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIAT: {
-            glascha = Unitas.GLADIAT! * unCalcTx.gla!;
-              break;
-          } case UnitasClavis.GLADIATO: {
-            glascha = Unitas.GLADIATOR! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIATORS: {
-            glascha = Unitas.GLADIATORS! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIATODOTRS: {
-            glascha = Unitas.GLADIATORS! * unCalcTx.gla!;
-            break;
-          } default: {
-            glascha = unCalcTx.gla!;
-          }
-        };
         PrivateKey pk = PrivateKey.fromHex(Pera.curve(), unCalcTx.from!);
         if (pk.publicKey.toHex() == unCalcTx.to) {
           return Response.badRequest(body: Error(code: 2, message: "potest mittere pecuniam publicam clavem", english: "can not send money to the same public key").toJson());
@@ -71,7 +40,7 @@ class TransactionLiberController extends ResourceController {
             ).toJson());
         }
         final InterioreTransaction tx =
-        await Pera.novamRem(true, true, unCalcTx.from!, glascha, unCalcTx.to!, p2p.liberTxs, directory, null);
+        await Pera.novamRem(true, true, unCalcTx.from!, unCalcTx.gla!, unCalcTx.to!, p2p.liberTxs, directory, null);
         p2p.liberTxs.add(Transaction.expressi(tx));
         p2p.expressieTxs.add(Transaction.expressi(await Pera.novamRem(true, false, unCalcTx.from!, glascha, unCalcTx.to!, p2p.liberTxs, directory, tx.id)));
         ReceivePort acciperePortus = ReceivePort();

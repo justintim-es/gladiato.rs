@@ -43,27 +43,23 @@ class SubmittereTransaction extends Serializable {
   String? from;
   String? to;
   BigInt? gla;
-  String? unit;
 
   Map<String, dynamic> asMap() => {
     'from': from,
     'to': to,
     'gla': gla,
-    'unit': unit
   };
   // SubmittereTransaction(this.from, this.to, this.gla, this.unit);
   void readFromMap(Map<String, dynamic> map) {
     to = map['to'].toString();
     from = map['from'].toString();
-    gla = BigInt.parse(map['gla'].toString());
-    unit = map['unit'].toString();
+    gla = map['gla'].toString().contains('e') ? BigInt.from(map['gla'] as num) : BigInt.parse(map['gla'].toString());
   }
   APISchemaObject documentSchema(APIDocumentContext context) {
     return APISchemaObject.object({
       "to": APISchemaObject.string(),
       "from": APISchemaObject.string(),
       "gla": APISchemaObject.string(),
-      "unit": APISchemaObject.string()
     });
   }
     

@@ -27,37 +27,6 @@ class TransactionFixumController extends ResourceController {
             "english": "can not send 0"
           });
         }
-        BigInt glascha = BigInt.zero;
-        switch(unCalcTx.unit) {
-          case UnitasClavis.GLA: {
-              glascha = Unitas.GLA! * unCalcTx.gla!;
-              break;
-          };
-          case UnitasClavis.GLAD: {
-              glascha = Unitas.GLAD! * unCalcTx.gla!;
-              break;
-          } case UnitasClavis.GLADI: {
-              glascha = Unitas.GLADI! * unCalcTx.gla!;
-              break;
-          } case UnitasClavis.GLADIA: {
-              glascha = Unitas.GLADIA! * unCalcTx.gla!;
-              break;
-          } case UnitasClavis.GLADIAT: {
-            glascha = Unitas.GLADIAT! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIATO: {
-            glascha = Unitas.GLADIATOR! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIATORS: {
-            glascha = Unitas.GLADIATORS! * unCalcTx.gla!;
-            break;
-          } case UnitasClavis.GLADIATODOTRS: {
-            glascha = Unitas.GLADIATORS! * unCalcTx.gla!;
-            break;
-          } default: {
-            glascha = unCalcTx.gla!;
-          }
-        };
         PrivateKey pk = PrivateKey.fromHex(Pera.curve(), unCalcTx.from!);
         if (pk.publicKey.toHex() == unCalcTx.to) {
           return Response.ok({
@@ -65,7 +34,7 @@ class TransactionFixumController extends ResourceController {
             "english": "can not send money to the same public key"
           });
         }
-        final InterioreTransaction tx = await Pera.novamRem(false, false, unCalcTx.from!, glascha, unCalcTx.to!, p2p.fixumTxs, directory, null);
+        final InterioreTransaction tx = await Pera.novamRem(false, false, unCalcTx.from!, unCalcTx.gla!, unCalcTx.to!, p2p.fixumTxs, directory, null);
         ReceivePort acciperePortus = ReceivePort();
         fixumTxIsolates[tx.id] = await Isolate.spawn(Transaction.quaestum, List<dynamic>.from([tx, acciperePortus.sendPort]));
         acciperePortus.listen((transaction) {
