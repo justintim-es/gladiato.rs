@@ -42,7 +42,7 @@ class TransactionLiberController extends ResourceController {
         final InterioreTransaction tx =
         await Pera.novamRem(true, true, unCalcTx.from!, unCalcTx.gla!, unCalcTx.to!, p2p.liberTxs, directory, null);
         p2p.liberTxs.add(Transaction.expressi(tx));
-        p2p.expressieTxs.add(Transaction.expressi(await Pera.novamRem(true, false, unCalcTx.from!, glascha, unCalcTx.to!, p2p.liberTxs, directory, tx.id)));
+        p2p.expressieTxs.add(Transaction.expressi(await Pera.novamRem(true, false, unCalcTx.from!, unCalcTx.gla!, unCalcTx.to!, p2p.liberTxs, directory, tx.id)));
         ReceivePort acciperePortus = ReceivePort();
         liberTxIsolates[tx.id] = await Isolate.spawn(Transaction.quaestum, List<dynamic>.from([tx, acciperePortus.sendPort]));
         acciperePortus.listen((transaction) {
